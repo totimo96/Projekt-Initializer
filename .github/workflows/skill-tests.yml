@@ -1,0 +1,22 @@
+name: skill-tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+      - name: Scaffold negative and positive tests
+        run: node --test tests/*.test.mjs
+      - name: Skill structure
+        run: |
+          test -f SKILL.md
+          test -f references/interview-checklist.md
+          test -f references/blueprint-template.md
+          test -f templates/react-vite-ts/.github/workflows/verify.yml
